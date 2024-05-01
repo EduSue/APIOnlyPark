@@ -2,6 +2,7 @@ import express from 'express';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
+const cors = require("cors");
 
 dotenv.config();
 
@@ -11,6 +12,15 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 app.use(express.json());
+app.use(cors())
+
+
+
+
+
+
+
+
 
 // Ruta GET para obtener todas las personas
 app.get('/api/personas', async (req, res) => {
@@ -24,6 +34,8 @@ app.get('/api/personas', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
 
 // Ruta POST para crear una nueva persona
 app.post('/api/personas', async (req, res) => {
