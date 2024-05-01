@@ -1,0 +1,154 @@
+###
+GET http://localhost:3000/api/personas HTTP/1.1
+
+###
+POST http://localhost:3000/api/personas HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "Henry Vaca",
+    "apellidos": "Ronaldino",
+    "telefono": "73434433",
+    "correo": "henry@gmail.com",
+    "imagen_perfil": null,
+    "rol": "administrador"
+}
+
+###
+PUT http://localhost:3000/api/personas/2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "rol": "usuario"
+}
+
+
+
+
+
+### Garaje
+GET http://localhost:3000/api/garajes HTTP/1.1
+
+###
+POST http://localhost:3000/api/garajes HTTP/1.1
+Content-Type: application/json
+
+{
+    "capacidad": 0,
+    "latitud": 30.7128,
+    "longitud": -24.0060,
+    "direccion": "123 Calle Paco",
+    "descripcion": "Garaje amplio y seguro",
+    "ciudad": "Sucre",
+    "imagen_referencia": null,
+    "monto_hora": 10.50,
+    "monto_sancion": 20.00,
+    "flag": 1,
+    "id_propietario": 2
+}
+
+###
+PUT http://localhost:3000/api/garajes/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_propietario": 1,
+    "latitud": 320.7128,
+    "longitud": -224.0060,
+    "direccion": "123 Calle Poconas"
+}
+
+
+
+
+
+### Espacios
+POST http://localhost:3000/api/garajes/2/espacios HTTP/1.1
+Content-Type: application/json
+
+{
+    "tipo_espacio": "Coche",
+    "flag": 0
+}
+
+###
+GET http://localhost:3000/api/garajes/2/espacios HTTP/1.1
+
+
+
+
+
+###
+PUT http://localhost:3000/api/espacios/1/habilitar HTTP/1.1
+Content-Type: application/json
+
+{
+    
+}
+###
+PUT http://localhost:3000/api/espacios/1/desactivar HTTP/1.1
+Content-Type: application/json
+
+{
+    
+}
+
+
+
+
+### vehiculos
+GET http://localhost:3000/api/vehiculos HTTP/1.1
+
+###
+POST http://localhost:3000/api/vehiculos HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_persona": 2,
+    "tipo_vehiculo": "coche",
+    "placa": "ABC321"
+}
+
+###
+PUT http://localhost:3000/api/vehiculos/2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_persona": 1
+}
+
+
+
+
+
+### Reservas
+POST http://localhost:3000/api/reservas HTTP/1.1
+Content-Type: application/json
+
+{
+    
+    "id_usuario": 1,
+    "id_espacio": 6,
+    "id_vehiculo": 1,
+    "hora_inicio": "2024-05-02T10:00:00",
+    "hora_final": "2024-05-03T16:00:00",
+    "descripcion_san": "Sin descripción",
+    "flag": 1
+}
+
+### 
+GET http://localhost:3000/api/reservas HTTP/1.1
+
+### 
+GET http://localhost:3000/api/garajes/2/reservas HTTP/1.1
+
+
+
+
+###
+POST http://localhost:3000/api/pagos HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_reserva": 2
+}
