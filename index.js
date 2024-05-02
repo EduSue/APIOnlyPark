@@ -62,6 +62,37 @@ app.get('/api/personas', async (req, res) => {
 });
 
 
+// Ruta GET para obtener una persona por su ID
+app.get('/api/personas/:id', async (req, res) => {
+    const idPersona = req.params.id;
+
+    try {
+        // Consultar la persona por su ID
+        const { data: persona, error } = await supabase
+            .from('personas')
+            .select('*')
+            .eq('id_persona', idPersona)
+            .single();
+        if (error) {
+            throw error;
+        }
+
+        // Si no se encuentra la persona, devolver un mensaje
+        if (!persona) {
+            return res.status(404).json({ message: `No se encontró la persona con el ID ${idPersona}` });
+        }
+
+        // Devolver la persona encontrada
+        res.status(200).json({ persona });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+
+
 
 // Ruta POST para agregar una nueva persona
 app.post('/api/personas', async (req, res) => {
