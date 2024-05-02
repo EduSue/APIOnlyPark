@@ -564,9 +564,16 @@ app.post('/api/pagos', async (req, res) => {
 
 
 
+
+
+
+
+
+
+
 //Login
 // Ruta POST para iniciar sesión
-app.post('/api/login', async (req, res) => {
+app.post('/api/login/user', async (req, res) => {
     const { usuario, password } = req.body;
 
     try {
@@ -599,9 +606,11 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+
+
 // Login
 // Ruta POST para iniciar sesión
-app.post('/api/login', async (req, res) => {
+app.post('/api/login/admin', async (req, res) => {
     const { usuario, password } = req.body;
 
     try {
@@ -639,6 +648,46 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+
+// Login
+// Ruta POST para iniciar sesión
+app.post('/api/login/arrendador', async (req, res) => {
+    const { usuario, password } = req.body;
+
+    try {
+        // Verificar si el usuario existe
+        const { data: personas, error: personasError } = await supabase
+            .from('personas')
+            .select('*')
+            .eq('usuario', usuario);
+        if (personasError) {
+            throw personasError;
+        }
+
+        // Si no hay ninguna persona con el nombre de usuario proporcionado, devolver un error
+        if (!personas || personas.length === 0) {
+            return res.status(404).json({ message: 'El usuario no existe' });
+        }
+
+        // Obtener la primera persona encontrada
+        const personaEncontrada = personas[0];
+
+        // Verificar si la contraseña proporcionada coincide con la contraseña almacenada
+        if (password !== personaEncontrada.password) {
+            return res.status(401).json({ message: 'Contraseña incorrecta' });
+        }
+
+        // Verificar si el usuario es administrador
+        if (personaEncontrada.rol !== 'arrendador') {
+            return res.status(403).json({ message: 'No autorizado' });
+        }
+
+        // Usuario autenticado correctamente como administrador
+        res.status(200).json({ message: 'Inicio de sesión exitoso', persona: personaEncontrada });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 
