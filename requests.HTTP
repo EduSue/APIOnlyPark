@@ -9,13 +9,17 @@ POST http://localhost:3000/api/personas HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre": "Henry Vaca",
-    "apellidos": "Ronaldino",
-    "telefono": "73434433",
-    "correo": "henry@gmail.com",
+    "nombre": "Juan",
+    "apellidos": "Pérez",
+    "telefono": "123456789",
+    "correo": "juan@gmail.com",
     "imagen_perfil": null,
-    "rol": "administrador"
+    "rol": "usuario",
+    "password": "123",
+    "usuario": "juanito",
+    "estado": 1
 }
+
 
 ###
 PUT http://localhost:3000/api/personas/2 HTTP/1.1

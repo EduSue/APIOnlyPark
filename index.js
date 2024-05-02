@@ -63,21 +63,25 @@ app.get('/api/personas', async (req, res) => {
 
 
 
-// Ruta POST para crear una nueva persona
+// Ruta POST para agregar una nueva persona
 app.post('/api/personas', async (req, res) => {
-    const { nombre, apellidos, telefono, correo, imagen_perfil, rol } = req.body;
+    const { nombre, apellidos, telefono, correo, imagen_perfil, rol, password, usuario, estado } = req.body;
     try {
-        const { data, error } = await supabase.from('personas').insert([
-            { nombre, apellidos, telefono, correo, imagen_perfil, rol }
-        ]);
+        // Insertar la nueva persona en la tabla de personas
+        const { data: nuevaPersona, error } = await supabase
+            .from('personas')
+            .insert({ nombre, apellidos, telefono, correo, imagen_perfil, rol, password, usuario, estado })
+            .single();
         if (error) {
             throw error;
         }
-        res.status(201).json(data[0]);
+
+        res.status(201).json({ persona: nuevaPersona });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
+
 
 // Ruta PUT para actualizar una persona
 app.put('/api/personas/:id', async (req, res) => {
